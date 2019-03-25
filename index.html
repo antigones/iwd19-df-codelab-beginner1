@@ -100,7 +100,7 @@
 <li>Personalizza i messaggi di benvenuto.</li>
 </ol>
 <p><img alt="welcome_responses" src="img\1200c105700d5150.png"></p>
-<ol type="1">
+<ol type="1" start="5">
 <li>Fai click sul tasto &#34;Save&#34; in alto</li>
 </ol>
 <p><img alt="save_btn" src="img\3be04d4d96081bd5.png"></p>
@@ -114,15 +114,15 @@
 <li>Fai click sulla voce di menu &#34;Intents&#34;, nella colonna di sinistra.</li>
 </ol>
 <p><img alt="menu_intents" src="img\88188eefe2793e6c.png"></p>
-<ol type="1">
+<ol type="1" start="2">
 <li>Fai click sul pulsante &#34;Create intent&#34;.</li>
 </ol>
 <p><img alt="intent_list" src="img\28703161d4b1572e.png"></p>
-<ol type="1">
+<ol type="1" start="3">
 <li>Imposta il nome &#34;request facts&#34; per il nuovo intento.</li>
 </ol>
 <p><img alt="create_request_facts_intent" src="img\a6e676319084a881.png"></p>
-<ol type="1">
+<ol type="1" start="4">
 <li>Fai click su &#34;Save&#34;.</li>
 </ol>
 <h2>Definizione delle frasi di training</h2>
@@ -133,21 +133,21 @@
 <li>Fai click sul link &#34;Add training phrases&#34;.</li>
 </ol>
 <p><img alt="training_phrases_1" src="img\49e5decd08708377.png"></p>
-<ol type="1">
+<ol type="1" start="2">
 <li>Aggiungi alcune frasi che dovrebbero scatenare questo intento. Ad esempio, la prima frase potrebbe essere: <em>&#34;parlami di Grace Hopper&#34;</em>.</li>
 </ol>
 <p><img alt="training_phrases_2" src="img\56f18259bf1b25d3.png"></p>
-<ol type="1">
+<ol type="1" start="3">
 <li>Prima di premere Invio, seleziona solo la parte di frase &#34;Grace Hopper&#34; e specifica che si tratta di una entità di tipo @sys.any.</li>
 <li>Cambia il nome del parametro in &#34;name&#34;.</li>
 </ol>
 <p><img alt="training_phrases_3" src="img\7d06c1b211d70b39.png"></p>
-<ol type="1">
+<ol type="1" start="5">
 <li>Inserisci un&#39; altra frase che dovrebbe richiamare questo intento, come ad esempio: &#34;dimmi qualcosa su Ada Lovelace&#34;. Premendo invio, vedrai che DialogFlow probabilmente non riuscirà a riconoscere correttamente l&#39;entità di riferimento del nome &#34;Ada Lovelace&#34; ma selezionando &#34;Ada Lovelace&#34; potrai ricondurlo all&#39;entità @sys.any:name corretta. Nota che entità uguali sono evidenziate con colori uguali.</li>
 </ol>
 <p><img alt="Screenshot_3a" src="img\435d5d2ec908a7a1.png"></p>
 <p><img alt="training_phrases_4" src="img\6b607b73ce957c72.png"></p>
-<ol type="1">
+<ol type="1" start="6">
 <li>Quando hai inserito tutte le frasi, fai click sul pulsante &#34;Save&#34;.</li>
 </ol>
 
@@ -162,11 +162,11 @@
 <li>fai click su &#34;<strong>Enable fulfillment</strong>&#34;</li>
 </ol>
 <p><img alt="fulfillment" src="img\5773eaa088e4200d.png"></p>
-<ol type="1">
+<ol type="1" start="3">
 <li>Fai click su &#34;<strong>Enable webhook call for this intent</strong>&#34;</li>
 </ol>
 <p><img alt="fulfillment_2" src="img\3cf31382c7a62e87.png"></p>
-<ol type="1">
+<ol type="1" start="4">
 <li>Fai click su &#34;Save&#34;</li>
 </ol>
 <p>Per implementare il codice di fulfillment:</p>
@@ -174,7 +174,7 @@
 <li>fai click sulla voce <strong>&#34;Fulfillment&#34;</strong> nel menu a sinistra.</li>
 </ol>
 <p><img alt="fulfillment_3" src="img\4a8e2a55153a351f.png"></p>
-<ol type="1">
+<ol type="1" start="2">
 <li>Fai click su <strong>&#34;Inline editor&#34;</strong>.</li>
 <li>Completa il codice come segue:<pre><code>// See https://github.com/dialogflow/dialogflow-fulfillment-nodejs
 // for Dialogflow fulfillment library docs, samples, and to report issues
@@ -254,6 +254,7 @@ agent.handleRequest(intentMap);
 
 </code></pre>
 </li>
+<li>fai click sul pulsante "Salva"</li>
 </ol>
 
 
