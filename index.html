@@ -1,0 +1,307 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>IWD2019 Agent - Beginner Tutorial</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab title="IWD2019 Agent - Beginner Tutorial"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Overview" duration="5">
+        <p>Actions on Google è una piattaforma che ti permette di creare software che estende le funzionalità del Google Assistant](https://assistant.google.com/).</p>
+<h2>Che cosa farai in questo codelab</h2>
+<p>In questo codelab, creerai una semplice Action che funzionerà nel seguente modo:</p>
+<ul>
+<li>Gli utenti inizieranno la conversazione invocando la tua Action, che risponderà con un messaggio di benvenuto personalizzato.</li>
+<li>Gli utenti potranno richiedere di conoscere fatti su alcune donne importanti nella storia.</li>
+<li>La Action selezionerà un fatto e lo proporrà all&#39;utente.</li>
+<li>Gli utenti potranno terminare la conversazione in qualsiasi momento.</li>
+</ul>
+<h2>Che cosa imparerai</h2>
+<ul>
+<li>Capirai come funzionano Actions e DialogFlow.</li>
+<li>Capirai come creare un agent DialogFlow.</li>
+<li>Capirai come definire delle frasi di training in DialogFlow</li>
+<li>Capirai come testare la tua Action</li>
+<li>Capirai come implementare la tua Action utilizzando le Cloud Functions e le librerie DialogFlow.</li>
+</ul>
+<h2><strong>Di cosa avrai bisogno</strong></h2>
+<p>Avrai bisogno di avere a disposizione i seguenti strumenti:</p>
+<ul>
+<li>Un browser web, per esempio <a href="https://www.google.com/chrome/" target="_blank">Chrome</a>.</li>
+</ul>
+<h3><strong>Opzionale: ottieni il codice di esempio</strong></h3>
+<p>Se vuoi, puoi ottenere il codice associato a questo progetto dal nostro repository GitHub.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setup" duration="5">
+        <h2><strong>Controlla le impostazioni relative ai permessi Google</strong></h2>
+<p>Per provare la Action che realizzerai in questo codelab, dovrai abilitare i permessi necessari.</p>
+<ol type="1">
+<li>Vai alla pagina ‘Activity Controls&#39; (<a href="https://myaccount.google.com/activitycontrols" target="_blank">https://myaccount.google.com/activitycontrols</a>).</li>
+<li>Se non lo hai già fatto precedentemente, fai il login con il tuo account Google.</li>
+<li>Assicurati di aver abilitato i seguenti permessi:</li>
+</ol>
+<ul>
+<li>Web &amp; App Activity (devi anche abilitare ‘Include Chrome history&#39;)</li>
+<li>Device Information</li>
+<li>Voice &amp; Audio Activity</li>
+</ul>
+<h2>Crea un agente DialogFlow</h2>
+<p>Per costruire la tua Action, devi creare un nuovo agente DialogFlow:</p>
+<ol type="1">
+<li>Apri la <a href="[https://console.dialogflow.com](https://console.dialogflow.com/)" target="_blank">Console DialogFlow</a>.</li>
+<li>Prenditi del tempo per osservare l&#39;interfaccia della piattaforma.</li>
+<li>A sinistra nell&#39;interfaccia, proprio sotto il logo DialogFlow, seleziona <strong>Create agent</strong>. Se hai già creato dei progetti, questa voce si trova in fondo al menù a tendina che elenca tutti i tuoi agenti.</li>
+</ol>
+<p><img alt="create_agent_plus" src="img\769829cfd83cb19a.png"></p>
+<ol type="1">
+<li>Imposta un nome ed una lingua di default per il progetto.</li>
+</ol>
+<p><img alt="create_agent" src="img\5d1908fd0ad5beea.png"></p>
+<ol type="1">
+<li>Fai click su &#34;Create&#34;.</li>
+</ol>
+<p>DialogFlow inizializzerà tutte le risorse necessarie a supporto del progetto.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Personalizzazione del messaggio di benvenuto" duration="5">
+        <p>Ogni nuovo progetto è già dotato di due intenti: &#34;Default Welcome Intent&#34; e &#34;Default Fallback Intent&#34;.</p>
+<p>Il <strong>&#34;Default Welcome Intent&#34;</strong> è l&#39;intent con cui l&#39;agent si presenta ogni volta che viene invocato. Nella sezione &#34;Responses&#34; si possono definire le frasi che l&#39;agent pronuncia quando viene chiamato dall&#39;Assistente Google.</p>
+<p>Il <strong>&#34;Default Fallback Intent&#34;</strong> è l&#39;intent che viene invocato tutte le volte che l&#39;agent non sa come comportarsi. Generalmente in questo caso l&#39;agent è già predisposto per ripondere con frasi come: &#34;potresti ripetere?&#34; o &#34;non ho capito bene&#34;.</p>
+<p><img alt="intent_list" src="img\28703161d4b1572e.png"></p>
+<p>Per personalizzare il messaggio di benvenuto dell&#39;agent:</p>
+<ol type="1">
+<li>Fai click su &#34;Default Welcome Intent&#34; nella schermata con la lista degli Intent. Se non ti trovi su questa schermata, fai click sulla voce di menu &#34;Intents&#34;, nella colonna di sinistra.</li>
+<li>Scorri la schermata in basso, fino a raggiungere la sezione <strong>&#34;Responses&#34;</strong>.</li>
+<li>Fai click sulla casella di testo.</li>
+<li>Personalizza i messaggi di benvenuto.</li>
+</ol>
+<p><img alt="welcome_responses" src="img\1200c105700d5150.png"></p>
+<ol type="1">
+<li>Fai click sul tasto &#34;Save&#34; in alto</li>
+</ol>
+<p><img alt="save_btn" src="img\3be04d4d96081bd5.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creazione di un intent per la richiesta di informazioni" duration="5">
+        <p>Per creare l&#39;intent di richiesta delle informazioni:</p>
+<ol type="1">
+<li>Fai click sulla voce di menu &#34;Intents&#34;, nella colonna di sinistra.</li>
+</ol>
+<p><img alt="menu_intents" src="img\88188eefe2793e6c.png"></p>
+<ol type="1">
+<li>Fai click sul pulsante &#34;Create intent&#34;.</li>
+</ol>
+<p><img alt="intent_list" src="img\28703161d4b1572e.png"></p>
+<ol type="1">
+<li>Imposta il nome &#34;request facts&#34; per il nuovo intento.</li>
+</ol>
+<p><img alt="create_request_facts_intent" src="img\a6e676319084a881.png"></p>
+<ol type="1">
+<li>Fai click su &#34;Save&#34;.</li>
+</ol>
+<h2>Definizione delle frasi di training</h2>
+<p>Ogni intent viene richiamato quando l&#39;utente pronuncia determinate frasi.</p>
+<p>Vorremmo che il nostro intent venisse richiamato quando l&#39;utente pronuncia delle frasi come: <em>&#34;parlami di Ada Lovelace&#34;</em> o <em>&#34;dimmi qualcosa su Grace Hopper!&#34;</em>.</p>
+<p>Per impostare le frasi di training:</p>
+<ol type="1">
+<li>Fai click sul link &#34;Add training phrases&#34;.</li>
+</ol>
+<p><img alt="training_phrases_1" src="img\49e5decd08708377.png"></p>
+<ol type="1">
+<li>Aggiungi alcune frasi che dovrebbero scatenare questo intento. Ad esempio, la prima frase potrebbe essere: <em>&#34;parlami di Grace Hopper&#34;</em>.</li>
+</ol>
+<p><img alt="training_phrases_2" src="img\56f18259bf1b25d3.png"></p>
+<ol type="1">
+<li>Prima di premere Invio, seleziona solo la parte di frase &#34;Grace Hopper&#34; e specifica che si tratta di una entità di tipo @sys.any.</li>
+<li>Cambia il nome del parametro in &#34;name&#34;.</li>
+</ol>
+<p><img alt="training_phrases_3" src="img\7d06c1b211d70b39.png"></p>
+<ol type="1">
+<li>Inserisci un&#39; altra frase che dovrebbe richiamare questo intento, come ad esempio: &#34;dimmi qualcosa su Ada Lovelace&#34;. Premendo invio, vedrai che DialogFlow probabilmente non riuscirà a riconoscere correttamente l&#39;entità di riferimento del nome &#34;Ada Lovelace&#34; ma selezionando &#34;Ada Lovelace&#34; potrai ricondurlo all&#39;entità @sys.any:name corretta. Nota che entità uguali sono evidenziate con colori uguali.</li>
+</ol>
+<p><img alt="Screenshot_3a" src="img\435d5d2ec908a7a1.png"></p>
+<p><img alt="training_phrases_4" src="img\6b607b73ce957c72.png"></p>
+<ol type="1">
+<li>Quando hai inserito tutte le frasi, fai click sul pulsante &#34;Save&#34;.</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Fulfillment" duration="10">
+        <p>Il <strong>fulfillment</strong> permette di inviare i parametri al backend e di processarli per ottenere una risposta dall&#39;agent.</p>
+<p>Per abilitare il fulfillment per l&#39;intento &#34;request facts&#34;:</p>
+<ol type="1">
+<li>scorri in basso nella pagina dell&#39;intento.</li>
+<li>fai click su &#34;<strong>Enable fulfillment</strong>&#34;</li>
+</ol>
+<p><img alt="fulfillment" src="img\5773eaa088e4200d.png"></p>
+<ol type="1">
+<li>Fai click su &#34;<strong>Enable webhook call for this intent</strong>&#34;</li>
+</ol>
+<p><img alt="fulfillment_2" src="img\3cf31382c7a62e87.png"></p>
+<ol type="1">
+<li>Fai click su &#34;Save&#34;</li>
+</ol>
+<p>Per implementare il codice di fulfillment:</p>
+<ol type="1">
+<li>fai click sulla voce <strong>&#34;Fulfillment&#34;</strong> nel menu a sinistra.</li>
+</ol>
+<p><img alt="fulfillment_3" src="img\4a8e2a55153a351f.png"></p>
+<ol type="1">
+<li>Fai click su <strong>&#34;Inline editor&#34;</strong>.</li>
+<li>Completa il codice come segue:<pre><code>// See https://github.com/dialogflow/dialogflow-fulfillment-nodejs
+// for Dialogflow fulfillment library docs, samples, and to report issues
+&#39;use strict&#39;;
+ 
+const functions = require(&#39;firebase-functions&#39;);
+const {WebhookClient} = require(&#39;dialogflow-fulfillment&#39;);
+const {Card, Suggestion} = require(&#39;dialogflow-fulfillment&#39;);
+ 
+process.env.DEBUG = &#39;dialogflow:debug&#39;; // enables lib debugging statements
+ 
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) =&gt; {
+const agent = new WebhookClient({ request, response });
+console.log(&#39;Dialogflow Request headers: &#39; + JSON.stringify(request.headers));
+console.log(&#39;Dialogflow Request body: &#39; + JSON.stringify(request.body));
+ 
+function welcome(agent) {
+agent.add(`Welcome to my agent!`);
+}
+ 
+function fallback(agent) {
+agent.add(`I didn&#39;t understand`);
+agent.add(`I&#39;m sorry, can you try again?`);
+}
+  
+const facts = [
+{name:&#39;Grace Hopper&#39;,fact:&#39;Grace Murray Hopper è passata alla storia per aver realizzato il linguaggio di programmazione Cobol&#39;},
+{name:&#39;Ada Lovelace&#39;,fact:&#39;Ada Lovelace è ricordata come la prima programmatrice di computer al mondo.&#39;},
+{name:&#39;Hedy Lamarr&#39;,fact:&#39;Hedy Lamarr ha inventato il sistema di modulazione delle frequenze per le comunicazioni.&#39;},
+{name:&#39;Margaret Hamilton&#39;,fact:&#39;Margaret Hamilton ha scritto il codice di bordo dell\&#39;Apollo 11.&#39;},
+];
+  
+function requestFacts(agent) {
+let name = agent.parameters.name;
+let fact = facts.find(x =&gt; x.name === name).fact;
+agent.add(fact);
+}
+
+// // Uncomment and edit to make your own intent handler
+// // uncomment `intentMap.set(&#39;your intent name here&#39;, yourFunctionHandler);`
+// // below to get this function to be run when a Dialogflow intent is matched
+// function yourFunctionHandler(agent) {
+//   agent.add(`This message is from Dialogflow&#39;s Cloud Functions for Firebase editor!`);
+//   agent.add(new Card({
+//       title: `Title: this is a card title`,
+//       imageUrl: &#39;https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png&#39;,
+//       text: `This is the body text of a card.  You can even use line\n  breaks and emoji! 💁`,
+//       buttonText: &#39;This is a button&#39;,
+//       buttonUrl: &#39;https://assistant.google.com/&#39;
+//     })
+//   );
+//   agent.add(new Suggestion(`Quick Reply`));
+//   agent.add(new Suggestion(`Suggestion`));
+//   agent.setContext({ name: &#39;weather&#39;, lifespan: 2, parameters: { city: &#39;Rome&#39; }});
+// }
+
+// // Uncomment and edit to make your own Google Assistant intent handler
+// // uncomment `intentMap.set(&#39;your intent name here&#39;, googleAssistantHandler);`
+// // below to get this function to be run when a Dialogflow intent is matched
+// function googleAssistantHandler(agent) {
+//   let conv = agent.conv(); // Get Actions on Google library conv instance
+//   conv.ask(&#39;Hello from the Actions on Google client library!&#39;) // Use Actions on Google library
+//   agent.add(conv); // Add Actions on Google library responses to your agent&#39;s response
+// }
+// // See https://github.com/dialogflow/dialogflow-fulfillment-nodejs/tree/master/samples/actions-on-google
+// // for a complete Dialogflow fulfillment library Actions on Google client library v2 integration sample
+
+// Run the proper function handler based on the matched Dialogflow intent name
+let intentMap = new Map();
+intentMap.set(&#39;Default Welcome Intent&#39;, welcome);
+intentMap.set(&#39;Default Fallback Intent&#39;, fallback);
+// intentMap.set(&#39;your intent name here&#39;, yourFunctionHandler);
+// intentMap.set(&#39;your intent name here&#39;, googleAssistantHandler);
+intentMap.set(&#39;request facts&#39;, requestFacts);
+agent.handleRequest(intentMap);
+});
+
+</code></pre>
+</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Un primo test" duration="5">
+        <p>A questo punto è già possibile testare il comportamento dell&#39;agent:</p>
+<ol type="1">
+<li>Fai click su &#34;See how it works in Google Assistant&#34;, nel menù a destra.</li>
+<li>Nella finestra che si apre fai click su &#34;Parla con la mia app di prova&#34; nel simulatore.</li>
+<li>Osserva che l&#39;agent risponde con il messaggio di benvenuto!</li>
+<li>Scrivi o pronuncia le parole <em>&#34;dimmi di Hedy Lamarr&#34;</em>.</li>
+<li>L&#39;agent risponde con un fatto relativo a Hedy Lamarr.</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Gestione dell&#39;uscita dal dialogo" duration="5">
+        <p>In questo momento l&#39;utente non ha alcun modo di terminare in modo gradevole la conversazione con l&#39;agent.</p>
+<p>Per introdurre la gestione dell&#39;uscita dal dialogo:</p>
+<ol type="1">
+<li>Fai click su &#34;Intents&#34;.</li>
+<li>Crea un nuovo intento con nome &#34;exit&#34;.</li>
+<li>Aggiungi alcune frasi di training per la chiusura della conversazione, come ad esempio: <em>&#34;Arrivederci!&#34;</em>, <em>&#34;alla prossima&#34;</em>.</li>
+<li>Nella sezione &#34;Responses&#34; in basso, abilita &#34;Set this intent as the end of conversation&#34;</li>
+<li>Sempre nella stessa sezione, definisci un messaggio di chiusura come <em>&#34;Grazie per aver parlato con me!&#34;</em>.</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Adesso tocca a te!" duration="30">
+        <p>Prova ad implementare le seguenti funzionalità:</p>
+<ol type="1">
+<li>L&#39;utente richiede un fatto a caso e l&#39;agent risponde proponendone uno, estratto casualmente dalla propria &#34;base di dati&#34;.</li>
+<li>Arricchisci le risposte dell&#39;agent (ad es. introducendo le Card): quali modifiche dovrai apportare al database dei fatti per supportare questo tipo di risposta?</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+
+</body>
+</html>

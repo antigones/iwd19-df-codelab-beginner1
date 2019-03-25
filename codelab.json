@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "source": "dialogflow\\beginner\\beginner.md",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2019-03-25T18:43:11+01:00",
+  "id": "IWD2019-beginner",
+  "duration": 75,
+  "title": "IWD2019 Agent - Beginner Tutorial",
+  "author": "GDG Roma - Juna Salviati",
+  "summary": "IWD2019 AoG event tutorial - beginner",
+  "theme": "",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "aog"
+  ],
+  "tags": [
+    "dialogflow"
+  ],
+  "ga": "0",
+  "url": "IWD2019-beginner"
+}
