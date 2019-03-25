@@ -209,8 +209,10 @@ const facts = [
   
 function requestFacts(agent) {
 let name = agent.parameters.name;
-let fact = facts.find(x =&gt; x.name === name).fact;
-agent.add(fact);
+let foundFact = facts.find(x => x.name === name);
+let defaultPhrase = 'Mi dispiace, non ho trovato niente su questa persona!';
+let phrase = (typeof foundFact === 'undefined' ? defaultPhrase : foundFact.fact);
+agent.add(phrase);
 }
 
 // // Uncomment and edit to make your own intent handler
